@@ -3,7 +3,7 @@
 ; ===================================================
 
 #define MyAppName "10Lexique"
-#define MyAppVersion "1.1.1"
+#define MyAppVersion "1.2.0"
 #define MyAppPublisher "10Lexique"
 #define MyAppExeName "10Lexique.exe"
 
