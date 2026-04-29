@@ -1,6 +1,6 @@
 """
 Libellés français pour les options de l'app.
-Les CLÉS internes restent en anglais (utilisées par claude_client.py),
+Les CLÉS internes restent en anglais (utilisées par ai_client.py),
 seules les LIBELLÉS affichés sont traduits.
 """
 

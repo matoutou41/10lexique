@@ -44,6 +44,8 @@ jobs:
             --hidden-import PIL._tkinter_finder `
             --hidden-import plyer.platforms.win.notification `
             --collect-all anthropic `
+            --collect-all google `
+            --collect-all google.genai `
             --collect-all customtkinter `
             --clean `
             --noconfirm `

@@ -10,8 +10,8 @@ import keyboard
 import pyperclip
 import customtkinter as ctk
 
-from config import load_config, save_config
-from claude_client import ClaudeClient
+from config import load_config, save_config, has_active_api_key, active_credentials
+from ai_client import build_client
 from text_handler import get_selected_text
 from notifier import notify
 from popup import CorrectorPopup, TAB_CORRECT, TAB_TRANSLATE, TAB_IMPROVE
@@ -30,14 +30,12 @@ class AppState:
         self.root = None
 
     def rebuild_client(self):
-        if not self.config.get("api_key"):
+        if not has_active_api_key(self.config):
             self.client = None
             return
         try:
-            self.client = ClaudeClient(
-                api_key=self.config["api_key"],
-                model=self.config.get("model", "claude-haiku-4-5"),
-            )
+            provider, api_key, model = active_credentials(self.config)
+            self.client = build_client(provider, api_key, model)
         except Exception as e:
             self.client = None
             notify("10Lexique", f"Erreur d'initialisation : {e}")
@@ -52,7 +50,7 @@ def _trigger_action(action: str):
     if state.busy:
         return
     if state.client is None:
-        notify("10Lexique", "Configurez d'abord votre clé API (clic sur l'icône).")
+        notify("10Lexique", "Configurez d'abord votre clé API (clic sur l'icône dans la barre des tâches).")
         return
 
     state.busy = True
@@ -204,9 +202,9 @@ def main():
     state.tray_menu = TrayMenu(state.root)
 
     # Premier lancement → paramètres
-    if not state.config.get("api_key"):
+    if not has_active_api_key(state.config):
         from settings_window import open_settings_modal
-        notify("10Lexique", "Premier lancement : configurez votre clé API.")
+        notify("10Lexique", "Premier lancement : configurez votre clé API (Anthropic ou Gemini).")
         open_settings_modal(state.root, on_save=on_settings_saved, blocking=True)
 
     state.rebuild_client()
