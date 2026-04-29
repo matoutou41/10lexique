@@ -77,8 +77,12 @@ def open_settings_modal(root, on_save=None, blocking: bool = False):
     seg.pack(fill="x")
     seg.set("Anthropic (Claude)" if provider_var.get() == "anthropic" else "Google (Gemini)")
 
+    # Container qui swappe entre les deux frames selon le provider sélectionné
+    provider_panel = ctk.CTkFrame(container, fg_color="transparent")
+    provider_panel.pack(fill="x", pady=(0, 14))
+
     # ----- Clé API Anthropic -----
-    anthro_frame = ctk.CTkFrame(container, fg_color="transparent")
+    anthro_frame = ctk.CTkFrame(provider_panel, fg_color="transparent")
 
     _label(anthro_frame, "Clé API Anthropic")
     anthro_key_var = tk.StringVar(value=cfg.get("anthropic_api_key", ""))
@@ -143,7 +147,7 @@ def open_settings_modal(root, on_save=None, blocking: bool = False):
     ).pack(fill="x", pady=(0, 6))
 
     # ----- Clé API Gemini -----
-    gem_frame = ctk.CTkFrame(container, fg_color="transparent")
+    gem_frame = ctk.CTkFrame(provider_panel, fg_color="transparent")
 
     _label(gem_frame, "Clé API Google Gemini")
     gem_key_var = tk.StringVar(value=cfg.get("gemini_api_key", ""))
@@ -207,22 +211,14 @@ def open_settings_modal(root, on_save=None, blocking: bool = False):
         font=theme.font(theme.FONT_SIZE_BODY),
     ).pack(fill="x", pady=(0, 6))
 
-    # Container qui swappe entre les deux frames selon le provider sélectionné
-    provider_panel = ctk.CTkFrame(container, fg_color="transparent")
-    provider_panel.pack(fill="x", pady=(8, 14))
-
-    # On reparente les frames dans le panel
-    anthro_frame.master = provider_panel
-    gem_frame.master = provider_panel
-
     def _show_provider_panel(name: str):
         # Cache les deux puis affiche le bon
         for f in (anthro_frame, gem_frame):
             f.pack_forget()
         if name == "anthropic":
-            anthro_frame.pack(in_=provider_panel, fill="x")
+            anthro_frame.pack(fill="x")
         else:
-            gem_frame.pack(in_=provider_panel, fill="x")
+            gem_frame.pack(fill="x")
 
     def _on_seg_change(value):
         new_provider = "anthropic" if value.startswith("Anthropic") else "gemini"
