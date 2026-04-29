@@ -1,5 +1,5 @@
 """
-Point d'entrée 10Lexique.
+Point d'entrée 10lex.
 """
 import os
 import sys
@@ -38,7 +38,7 @@ class AppState:
             self.client = build_client(provider, api_key, model)
         except Exception as e:
             self.client = None
-            notify("10Lexique", f"Erreur d'initialisation : {e}")
+            notify("10lex", f"Erreur d'initialisation : {e}")
 
 
 state = AppState()
@@ -50,7 +50,7 @@ def _trigger_action(action: str):
     if state.busy:
         return
     if state.client is None:
-        notify("10Lexique", "Configurez d'abord votre clé API (clic sur l'icône dans la barre des tâches).")
+        notify("10lex", "Configurez d'abord votre clé API (clic sur l'icône dans la barre des tâches).")
         return
 
     state.busy = True
@@ -59,7 +59,7 @@ def _trigger_action(action: str):
         try:
             selected, old_clip = get_selected_text()
             if not selected.strip():
-                notify("10Lexique", "Aucun texte sélectionné.")
+                notify("10lex", "Aucun texte sélectionné.")
                 return
             state.popup.show_for_action(action, selected, old_clip)
         finally:
@@ -82,16 +82,16 @@ def handle_improve():
 
 def handle_test_clipboard():
     if state.client is None:
-        notify("10Lexique", "Configurez d'abord votre clé API.")
+        notify("10lex", "Configurez d'abord votre clé API.")
         return
     try:
         text = pyperclip.paste()
         if not text or not text.strip():
-            notify("10Lexique", "Le presse-papier est vide.")
+            notify("10lex", "Le presse-papier est vide.")
             return
         state.popup.show_for_action(TAB_CORRECT, text, "")
     except Exception as e:
-        notify("10Lexique", f"Erreur : {e}")
+        notify("10lex", f"Erreur : {e}")
 
 
 # ---------- Hotkeys ----------
@@ -138,7 +138,7 @@ def on_settings_saved(new_cfg):
     state.config = new_cfg
     state.rebuild_client()
     register_hotkeys()
-    notify("10Lexique", "Paramètres mis à jour.")
+    notify("10lex", "Paramètres mis à jour.")
 
 
 def quit_app():
@@ -163,7 +163,7 @@ def show_tray_menu():
     hk = cfg.get("hotkey_correct", "alt+k").upper()
 
     items = [
-        ("title", "10Lexique"),
+        ("title", "10lex"),
         (f"✓  Corriger ({hk})", handle_correct),
         ("🌐  Traduire", handle_translate),
         ("✨  Améliorer", handle_improve),
@@ -171,7 +171,7 @@ def show_tray_menu():
         ("📋  Corriger le presse-papier", handle_test_clipboard),
         ("⚙  Paramètres…", open_settings_window),
         ("---", None),
-        ("✕  Quitter 10Lexique", quit_app),
+        ("✕  Quitter 10lex", quit_app),
     ]
 
     def _show():
@@ -204,14 +204,14 @@ def main():
     # Premier lancement → paramètres
     if not has_active_api_key(state.config):
         from settings_window import open_settings_modal
-        notify("10Lexique", "Premier lancement : configurez votre clé API (Anthropic ou Gemini).")
+        notify("10lex", "Premier lancement : configurez votre clé API (Anthropic ou Gemini).")
         open_settings_modal(state.root, on_save=on_settings_saved, blocking=True)
 
     state.rebuild_client()
     register_hotkeys()
 
     notify(
-        "10Lexique",
+        "10lex",
         f"Actif. Raccourci : {state.config.get('hotkey_correct', 'alt+k').upper()}",
         timeout=3,
     )

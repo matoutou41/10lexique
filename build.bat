@@ -1,13 +1,13 @@
 @echo off
 REM ===================================================
-REM  10Lexique - Build complet
-REM  1. Genere dist\10Lexique.exe (PyInstaller)
-REM  2. Genere installer_output\10Lexique-Setup-X.Y.Z.exe (Inno Setup)
+REM  10lex - Build complet
+REM  1. Genere dist\10lex.exe (PyInstaller)
+REM  2. Genere installer_output\10lex-Setup-X.Y.Z.exe (Inno Setup)
 REM ===================================================
 setlocal
 
 echo.
-echo === Build 10Lexique ===
+echo === Build 10lex ===
 echo.
 
 python --version >nul 2>&1
@@ -52,12 +52,12 @@ if errorlevel 1 (
 echo [5/5] Generation de l'EXE...
 if exist "build\" rmdir /S /Q build
 if exist "dist\" rmdir /S /Q dist
-if exist "10Lexique.spec" del /Q 10Lexique.spec
+if exist "10lex.spec" del /Q 10lex.spec
 
 pyinstaller ^
     --onefile ^
     --windowed ^
-    --name 10Lexique ^
+    --name 10lex ^
     --icon assets\icon.ico ^
     --add-data "assets\icon.png;assets" ^
     --add-data "assets\icon.ico;assets" ^
@@ -76,14 +76,14 @@ if errorlevel 1 (
     exit /b 1
 )
 
-if not exist "dist\10Lexique.exe" (
+if not exist "dist\10lex.exe" (
     echo [ERREUR] L'EXE n'a pas ete genere.
     pause
     exit /b 1
 )
 
 echo.
-echo === EXE genere : dist\10Lexique.exe ===
+echo === EXE genere : dist\10lex.exe ===
 echo.
 
 REM ---- Inno Setup ----
@@ -95,7 +95,7 @@ if exist "%ProgramFiles%\Inno Setup 6\ISCC.exe" set "ISCC=%ProgramFiles%\Inno Se
 if "%ISCC%"=="" (
     echo.
     echo === [INFO] Inno Setup n'est pas installe ===
-    echo L'EXE autonome est pret : dist\10Lexique.exe
+    echo L'EXE autonome est pret : dist\10lex.exe
     echo Pour generer un INSTALLATEUR : telechargez Inno Setup 6 sur
     echo   https://jrsoftware.org/isdl.php
     echo Puis relancez ce build.bat
@@ -118,8 +118,8 @@ echo.
 echo ===================================================
 echo  BUILD TERMINE !
 echo ===================================================
-echo  EXE autonome    : dist\10Lexique.exe
-echo  Installateur    : installer_output\10Lexique-Setup-1.0.0.exe
+echo  EXE autonome    : dist\10lex.exe
+echo  Installateur    : installer_output\10lex-Setup-1.0.0.exe
 echo ===================================================
 echo.
 pause

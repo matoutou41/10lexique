@@ -1,25 +1,25 @@
 ; ===================================================
-;  10Lexique — Installateur Windows (Inno Setup)
+;  10lex — Installateur Windows (Inno Setup)
 ; ===================================================
 
-#define MyAppName "10Lexique"
-#define MyAppVersion "1.2.0"
-#define MyAppPublisher "10Lexique"
-#define MyAppExeName "10Lexique.exe"
+#define MyAppName "10lex"
+#define MyAppVersion "1.3.0"
+#define MyAppPublisher "10lex"
+#define MyAppExeName "10lex.exe"
 
 [Setup]
 AppId={{8C3A5E2F-1B4D-4F9A-8E7C-2D6F3B9A4E1F}}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
-DefaultDirName={autopf}\10Lexique
+DefaultDirName={autopf}\10lex
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 DisableWelcomePage=no
 DisableReadyPage=no
 DisableDirPage=no
 OutputDir=installer_output
-OutputBaseFilename=10Lexique-Setup-{#MyAppVersion}
+OutputBaseFilename=10lex-Setup-{#MyAppVersion}
 Compression=lzma2/max
 SolidCompression=yes
 WizardStyle=modern
@@ -37,7 +37,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
-Name: "startupicon"; Description: "Lancer 10Lexique au démarrage de Windows"; GroupDescription: "Démarrage automatique :"; Flags: unchecked
+Name: "startupicon"; Description: "Lancer 10lex au démarrage de Windows"; GroupDescription: "Démarrage automatique :"; Flags: unchecked
 
 [Files]
 Source: "dist\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
@@ -61,6 +61,6 @@ function InitializeUninstall(): Boolean;
 var
   ResultCode: Integer;
 begin
-  Exec(ExpandConstant('{cmd}'), '/C taskkill /F /IM 10Lexique.exe /T', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec(ExpandConstant('{cmd}'), '/C taskkill /F /IM 10lex.exe /T', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   Result := True;
 end;

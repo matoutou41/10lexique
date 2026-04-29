@@ -18,8 +18,8 @@ import theme
 import labels as lbl
 
 
-# Mode global CustomTkinter
-ctk.set_appearance_mode("dark")
+# Mode global CustomTkinter — light pour s'accorder à la palette violet/cream
+ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")  # on override avec nos couleurs
 
 
@@ -96,16 +96,26 @@ class CorrectorPopup:
         sidebar.grid(row=0, column=0, sticky="nswe", padx=(6, 0), pady=6)
         sidebar.grid_propagate(False)
 
-        # Titre app
+        # Titre app — "10lex" (matche la landing)
         title = ctk.CTkLabel(
             sidebar,
-            text="Claude\nCorrecteur",
-            font=theme.font(theme.FONT_SIZE_TITLE, "bold"),
-            text_color=theme.TEXT_PRIMARY,
+            text="10lex.",
+            font=theme.font_display(28, "bold"),
+            text_color=theme.TEXT_ON_DARK,
             anchor="w",
             justify="left",
         )
-        title.pack(fill="x", padx=18, pady=(20, 24))
+        title.pack(fill="x", padx=18, pady=(22, 6))
+
+        subtitle = ctk.CTkLabel(
+            sidebar,
+            text="la correction\npour les nuls",
+            font=theme.font(theme.FONT_SIZE_SMALL),
+            text_color=theme.TEXT_ON_DARK_MUTED,
+            anchor="w",
+            justify="left",
+        )
+        subtitle.pack(fill="x", padx=18, pady=(0, 22))
 
         # Onglets
         self._tab_buttons = {}
@@ -123,7 +133,7 @@ class CorrectorPopup:
             sidebar,
             text="",
             font=theme.font(theme.FONT_SIZE_SMALL),
-            text_color=theme.TEXT_MUTED,
+            text_color=theme.TEXT_ON_DARK_MUTED,
             anchor="w",
             justify="left",
         )
@@ -144,8 +154,8 @@ class CorrectorPopup:
         self._action_title = ctk.CTkLabel(
             header,
             text="Correction",
-            font=theme.font(theme.FONT_SIZE_TITLE, "bold"),
-            text_color=theme.TEXT_PRIMARY,
+            font=theme.font_display(theme.FONT_SIZE_TITLE, "bold"),
+            text_color=theme.TEXT_ON_DARK,
             anchor="w",
         )
         self._action_title.grid(row=0, column=0, sticky="w")
@@ -154,7 +164,7 @@ class CorrectorPopup:
             header,
             text="",
             font=theme.font(theme.FONT_SIZE_SMALL),
-            text_color=theme.TEXT_SECONDARY,
+            text_color=theme.TEXT_ON_DARK_MUTED,
             anchor="e",
         )
         self._status.grid(row=0, column=1, sticky="e")
@@ -164,7 +174,7 @@ class CorrectorPopup:
             content,
             text="",
             font=theme.font(theme.FONT_SIZE_SMALL),
-            text_color=theme.TEXT_SECONDARY,
+            text_color=theme.TEXT_ON_DARK_MUTED,
             anchor="w",
         )
         self._action_subtitle.grid(row=1, column=0, sticky="w", padx=4)
@@ -187,9 +197,9 @@ class CorrectorPopup:
             original_frame,
             text="Original",
             font=theme.font(theme.FONT_SIZE_SMALL, "bold"),
-            text_color=theme.TEXT_MUTED,
+            text_color=theme.TEXT_SECONDARY,
             anchor="w",
-        ).pack(fill="x", padx=10, pady=(6, 0))
+        ).pack(fill="x", padx=12, pady=(8, 0))
 
         self._original_box = ctk.CTkTextbox(
             original_frame,
@@ -226,6 +236,7 @@ class CorrectorPopup:
             text_color=theme.ACCENT,
             anchor="w",
         )
+        self._RESULT_DEFAULT_COLOR = theme.ACCENT
         self._result_label.pack(side="left")
 
         ctk.CTkLabel(
@@ -233,7 +244,7 @@ class CorrectorPopup:
             text="modifiable",
             font=theme.font(theme.FONT_SIZE_SMALL),
             text_color=theme.TEXT_MUTED,
-        ).pack(side="right")
+        ).pack(side="right", padx=(0, 4))
 
         self._result_box = ctk.CTkTextbox(
             result_frame,
@@ -254,14 +265,14 @@ class CorrectorPopup:
             text="Copier",
             command=self._on_copy,
             width=90,
-            height=34,
-            corner_radius=theme.RADIUS_MD,
+            height=38,
+            corner_radius=999,
             fg_color=theme.BG_CARD,
             hover_color=theme.BG_HOVER,
             text_color=theme.TEXT_PRIMARY,
-            border_width=1,
+            border_width=2,
             border_color=theme.BORDER,
-            font=theme.font(theme.FONT_SIZE_BODY),
+            font=theme.font(theme.FONT_SIZE_BODY, "bold"),
         )
         self._copy_btn.pack(side="right", padx=(6, 0))
 
@@ -269,9 +280,9 @@ class CorrectorPopup:
             footer,
             text="Appliquer",
             command=self._on_apply,
-            width=120,
-            height=34,
-            corner_radius=theme.RADIUS_MD,
+            width=130,
+            height=38,
+            corner_radius=999,
             fg_color=theme.ACCENT,
             hover_color=theme.ACCENT_HOVER,
             text_color=theme.ACCENT_TEXT,
@@ -284,7 +295,7 @@ class CorrectorPopup:
             footer,
             text="Entrée : appliquer  ·  Échap : fermer",
             font=theme.font(theme.FONT_SIZE_SMALL),
-            text_color=theme.TEXT_MUTED,
+            text_color=theme.TEXT_ON_DARK_MUTED,
         )
         self._hint.pack(side="left")
 
@@ -294,12 +305,12 @@ class CorrectorPopup:
             text=f"  {icon}   {label}",
             anchor="w",
             command=lambda k=key: self._switch_tab(k),
-            height=38,
-            corner_radius=theme.RADIUS_MD,
+            height=42,
+            corner_radius=999,
             fg_color="transparent",
-            hover_color=theme.BG_HOVER,
-            text_color=theme.TEXT_SECONDARY,
-            font=theme.font(theme.FONT_SIZE_BODY),
+            hover_color=theme.ACCENT,
+            text_color=theme.TEXT_ON_DARK,
+            font=theme.font(theme.FONT_SIZE_BODY, "bold"),
         )
         return btn
 
@@ -307,15 +318,15 @@ class CorrectorPopup:
         for key, btn in self._tab_buttons.items():
             if key == self._current_action:
                 btn.configure(
-                    fg_color=theme.ACCENT,
-                    text_color=theme.ACCENT_TEXT,
-                    hover_color=theme.ACCENT_HOVER,
+                    fg_color=theme.BG_CARD,
+                    text_color=theme.TEXT_PRIMARY,
+                    hover_color=theme.BG_HOVER,
                 )
             else:
                 btn.configure(
                     fg_color="transparent",
-                    text_color=theme.TEXT_SECONDARY,
-                    hover_color=theme.BG_HOVER,
+                    text_color=theme.TEXT_ON_DARK,
+                    hover_color=theme.ACCENT,
                 )
 
     # ---------- API publique (thread-safe) ----------

@@ -1,21 +1,16 @@
-# Claude Correcteur — v3
+# 10lex — v1.3.0
 
-Petit outil Windows qui corrige, traduit et améliore **n'importe quel texte sélectionné** via un raccourci clavier — propulsé par l'API Claude.
+Petit outil Windows qui corrige, traduit et améliore **n'importe quel texte sélectionné** via un raccourci clavier — propulsé par l'API Anthropic (Claude) ou Google (Gemini).
 
-Design inspiré de [LocalSend](https://localsend.org/) : sombre, arrondi, accent menthe, sans fioritures.
-
----
-
-## Nouveautés v3
-
-- 🎨 **Nouveau design** sombre et arrondi (CustomTkinter), inspiré de LocalSend
-- 🪟 **Popup flottante** sans bordure, qui se ferme automatiquement quand on clique en dehors
-- 📍 **Position intelligente** : la popup se place sous votre curseur sans recouvrir la zone d'édition
-- 🗂️ **3 onglets dans la même popup** : Corriger, Traduire, Améliorer
-- ⌨️ **Raccourcis** : `Alt+K` (corriger), `Alt+L` (traduire), `Alt+M` (améliorer)
-- 📦 **Installateur Inno Setup** avec raccourci bureau, démarrage Windows et désinstallateur
+Site officiel : [10lexique.pplx.app](https://10lexique.pplx.app)
 
 ---
+
+## Nouveautés v1.3
+
+- 🦖 **Nouvelle identité visuelle** : palette violet/lavande cartoon, polices Comic Sans / Bahnschrift, dino mascotte
+- 🏷️ **Renommage** : l'app s'appelle désormais **10lex** (icône + nom Windows + tray)
+- ✨ **Cohérence visuelle 100 %** avec la landing 10lexique.pplx.app
 
 ## Utilisation
 
@@ -37,9 +32,9 @@ Design inspiré de [LocalSend](https://localsend.org/) : sombre, arrondi, accent
 
 ### Pour un utilisateur final (recommandé)
 
-Récupérez **`ClaudeCorrecteur-Setup-1.0.0.exe`** (généré par `build.bat`) et double-cliquez. L'installateur :
+Récupérez **`10lex-Setup-1.3.0.exe`** depuis [la page de releases GitHub](https://github.com/matoutou41/10lexique/releases/latest) et double-cliquez. L'installateur :
 
-- Installe l'app dans `C:\Program Files\ClaudeCorrecteur`
+- Installe l'app dans `C:\Program Files\10lex`
 - Propose un raccourci sur le bureau
 - Propose le lancement automatique au démarrage de Windows
 - Ajoute un désinstallateur dans **Panneau de configuration > Programmes**
@@ -53,20 +48,11 @@ Récupérez **`ClaudeCorrecteur-Setup-1.0.0.exe`** (généré par `build.bat`) e
 
 **Étapes** :
 
-1. Décompressez `claude-correcteur-v3`
+1. Clonez le repo
 2. Double-cliquez sur **`build.bat`**
 3. ~3 minutes plus tard, vous avez :
-   - `dist\ClaudeCorrecteur.exe` — l'EXE autonome
-   - `installer_output\ClaudeCorrecteur-Setup-1.0.0.exe` — l'installateur à distribuer
-
-> ℹ️ Si Inno Setup n'est pas installé, le build s'arrête après la génération de l'EXE et vous indique où télécharger Inno Setup. Vous pouvez aussi distribuer juste `ClaudeCorrecteur.exe` sans installateur.
-
-### Pour modifier le code (mode dev)
-
-```bat
-build.bat                  REM première fois (installe les dépendances)
-lancer-dev.bat             REM lance avec console pour voir les erreurs
-```
+   - `dist\10lex.exe` — l'EXE autonome
+   - `installer_output\10lex-Setup-1.3.0.exe` — l'installateur à distribuer
 
 ---
 
@@ -76,11 +62,13 @@ Au premier lancement, la fenêtre Paramètres s'ouvre. Plus tard : clic droit su
 
 ### Connexion
 
-- **Clé API Anthropic** : à récupérer sur [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys)
+- **Provider** : Anthropic (Claude) ou Google (Gemini)
+- **Clé API** :
+  - Anthropic : [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys)
+  - Google : [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)
 - **Modèle** :
-  - `claude-haiku-4-5` (recommandé — rapide, ~0,001 € par usage)
-  - `claude-sonnet-4-6` (plus précis, plus cher)
-  - `claude-opus-4-7` (qualité max)
+  - Anthropic : `claude-haiku-4-5` (recommandé, économique), `claude-sonnet-4-6`, `claude-opus-4-7`
+  - Google : `gemini-2.0-flash` (rapide), `gemini-2.5-pro` (qualité)
 
 ### Raccourcis clavier
 
@@ -89,71 +77,22 @@ Par défaut :
 - Traduire : `alt+l`
 - Améliorer : `alt+m`
 
-Format accepté : `alt+k`, `ctrl+shift+espace`, `f9`, `ctrl+alt+c`, etc. Modification appliquée immédiatement.
+Format accepté : `alt+k`, `ctrl+shift+espace`, `f9`, `ctrl+alt+c`, etc.
 
 ### Préférences
 
 - **Langue cible (traduction)** : english, french, japanese, spanish, german, italian, chinese, korean
 - **Style d'amélioration** : neutral, formal, casual, shorter, longer
 
-La config est stockée dans `%APPDATA%\ClaudeCorrecteur\config.json`.
-
----
-
-## Comportement de la popup
-
-- **Ferme au clic extérieur** : pas besoin de cliquer sur Fermer
-- **Échap** ferme aussi
-- **Position intelligente** : sous le curseur si possible, au-dessus sinon, jamais sous les bords
-- **Sans bordure** : look flottant, pas de barre de titre Windows
-- **Toujours au premier plan** quand affichée
-
-### Astuce pour le bouton "Appliquer"
-
-Quand vous cliquez "Appliquer", la popup se cache et Windows redonne automatiquement le focus à la fenêtre précédente, puis le texte est remplacé. **Ne cliquez pas dans une autre app entre le raccourci et "Appliquer"** — sinon le focus ira dans la mauvaise fenêtre.
-
-Si jamais le remplacement rate, le résultat est de toute façon dans le presse-papier (Ctrl+V manuel possible).
-
----
-
-## Architecture
-
-```
-claude-correcteur-v3/
-├── build.bat                # Build EXE + Installateur
-├── lancer-dev.bat           # Mode dev avec console
-├── installer.iss            # Script Inno Setup
-├── make_icon.py             # Génération de l'icône
-├── requirements.txt
-├── README.md
-├── assets/
-│   ├── icon.ico             # Icône Windows multi-résolution
-│   └── icon.png             # Icône tray
-└── src/
-    ├── main.py              # Point d'entrée + hotkeys
-    ├── popup.py             # Popup flottante 3 onglets
-    ├── settings_window.py   # Fenêtre paramètres
-    ├── theme.py             # Palette + polices
-    ├── tray.py              # Icône barre des tâches
-    ├── claude_client.py     # API Claude
-    ├── text_handler.py      # Capture sélection
-    ├── config.py            # Config %APPDATA%
-    └── notifier.py          # Toasts Windows
-```
-
-**Un seul process Python** :
-- Thread principal → boucle CustomTkinter (popup + paramètres)
-- Thread tray → icône système (pystray)
-- Thread hotkeys → raccourcis globaux (keyboard)
-- Thread API → appels Claude non bloquants
+La config est stockée dans `%APPDATA%\10lex\config.json`.
 
 ---
 
 ## Désinstallation
 
-**Si installé via l'installateur** : Panneau de configuration → Programmes et fonctionnalités → Claude Correcteur → Désinstaller.
+**Si installé via l'installateur** : Panneau de configuration → Programmes et fonctionnalités → **10lex** → Désinstaller.
 
-**Si lancé en mode dev / EXE simple** : supprimez le dossier. Pour aussi enlever la config : supprimez `%APPDATA%\ClaudeCorrecteur\`.
+**Si lancé en mode dev / EXE simple** : supprimez le dossier. Pour aussi enlever la config : supprimez `%APPDATA%\10lex\`.
 
 ---
 
@@ -162,5 +101,3 @@ claude-correcteur-v3/
 Avec Claude Haiku 4.5 (1 $ / 5 $ par million de tokens) :
 - Une action sur 200 mots ≈ **0,001 €**
 - 1000 utilisations / mois ≈ **1 €**
-
-Suivi : [console.anthropic.com](https://console.anthropic.com/)

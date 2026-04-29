@@ -17,7 +17,7 @@ def notify(title: str, message: str, timeout: int = 3) -> None:
         notification.notify(
             title=title,
             message=message[:240],
-            app_name="10Lexique",
+            app_name="10lex",
             timeout=timeout,
         )
     except Exception:

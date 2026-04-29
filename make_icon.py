@@ -1,5 +1,5 @@
 """
-Génère assets/icon.ico (icône Windows multi-résolution) pour 10Lexique.
+Génère assets/icon.ico (icône Windows multi-résolution) pour 10lex.
 """
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont

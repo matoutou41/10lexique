@@ -36,7 +36,7 @@ jobs:
           pyinstaller `
             --onefile `
             --windowed `
-            --name 10Lexique `
+            --name 10lex `
             --icon assets/icon.ico `
             --add-data "assets/icon.png;assets" `
             --add-data "assets/icon.ico;assets" `
@@ -53,11 +53,11 @@ jobs:
 
       - name: Verify EXE
         run: |
-          if (-not (Test-Path "dist/10Lexique.exe")) {
+          if (-not (Test-Path "dist/10lex.exe")) {
             Write-Error "L'EXE n'a pas été généré"
             exit 1
           }
-          Write-Host "EXE généré : $((Get-Item dist/10Lexique.exe).Length) bytes"
+          Write-Host "EXE généré : $((Get-Item dist/10lex.exe).Length) bytes"
 
       - name: Install Inno Setup
         run: |
@@ -79,9 +79,9 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: 10Lexique-installer
+          name: 10lex-installer
           path: |
-            dist/10Lexique.exe
+            dist/10lex.exe
             installer_output/*.exe
 
       - name: Create Release (sur tag)
@@ -90,18 +90,18 @@ jobs:
         with:
           files: |
             installer_output/*.exe
-            dist/10Lexique.exe
+            dist/10lex.exe
           generate_release_notes: false
-          name: 10Lexique ${{ github.ref_name }}
+          name: 10lex ${{ github.ref_name }}
           body: |
             ## Téléchargement
 
-            **Pour installer 10Lexique sur votre PC Windows :**
+            **Pour installer 10lex sur votre PC Windows :**
 
-            Téléchargez `10Lexique-Setup-1.0.0.exe` ci-dessous et double-cliquez dessus.
+            Téléchargez `10lex-Setup-1.0.0.exe` ci-dessous et double-cliquez dessus.
 
             ### Fichiers
-            - `10Lexique-Setup-X.Y.Z.exe` — Installateur Windows complet (recommandé)
-            - `10Lexique.exe` — Version portable (pas d'installation)
+            - `10lex-Setup-X.Y.Z.exe` — Installateur Windows complet (recommandé)
+            - `10lex.exe` — Version portable (pas d'installation)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

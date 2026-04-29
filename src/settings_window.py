@@ -27,7 +27,7 @@ def open_settings_modal(root, on_save=None, blocking: bool = False):
     cfg = load_config()
 
     win = ctk.CTkToplevel(root)
-    win.title("10Lexique — Paramètres")
+    win.title("10lex — Paramètres")
     win.geometry("580x720")
     win.resizable(False, False)
     win.configure(fg_color=theme.BG_DARK)
@@ -46,8 +46,8 @@ def open_settings_modal(root, on_save=None, blocking: bool = False):
     ctk.CTkLabel(
         container,
         text="Paramètres",
-        font=theme.font(theme.FONT_SIZE_TITLE + 2, "bold"),
-        text_color=theme.TEXT_PRIMARY,
+        font=theme.font_display(theme.FONT_SIZE_TITLE + 4, "bold"),
+        text_color=theme.TEXT_ON_DARK,
         anchor="w",
     ).pack(fill="x", pady=(0, 16))
 
@@ -386,10 +386,10 @@ def _section_title(parent, text: str):
     ctk.CTkLabel(
         parent,
         text=text.upper(),
-        font=theme.font(theme.FONT_SIZE_SMALL, "bold"),
-        text_color=theme.ACCENT,
+        font=theme.font_display(theme.FONT_SIZE_SMALL + 1, "bold"),
+        text_color=theme.TEXT_ON_DARK,
         anchor="w",
-    ).pack(fill="x", pady=(8, 8))
+    ).pack(fill="x", pady=(12, 8))
 
 
 def _label(parent, text: str):
@@ -397,7 +397,7 @@ def _label(parent, text: str):
         parent,
         text=text,
         font=theme.font(theme.FONT_SIZE_SMALL),
-        text_color=theme.TEXT_SECONDARY,
+        text_color=theme.TEXT_ON_DARK_MUTED,
         anchor="w",
     ).pack(fill="x", pady=(0, 4))
 

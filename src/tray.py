@@ -63,5 +63,5 @@ def run_tray(on_icon_click, on_quit):
         pystray.MenuItem("Quitter (urgence)", quit_action),
     )
 
-    icon = pystray.Icon("10Lexique", image, "10Lexique — clic pour ouvrir", menu)
+    icon = pystray.Icon("10lex", image, "10lex — clic pour ouvrir", menu)
     icon.run()

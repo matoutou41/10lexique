@@ -1,41 +1,53 @@
 """
-Thème visuel inspiré de LocalSend : sombre, arrondi, accent turquoise/menthe.
-Utilisé par toutes les fenêtres pour un rendu cohérent.
+Thème visuel 10lex — DA cartoon violette, en cohérence avec la landing.
+Palette tirée du PSD de référence + favicon.
 """
 
-# Palette
-BG_DARK = "#1E1F22"         # fond principal (un peu plus clair que pur noir)
-BG_SIDEBAR = "#17181B"      # sidebar (plus sombre)
-BG_CARD = "#26272B"          # cartes / zones de texte
-BG_HOVER = "#2E2F34"
-BORDER = "#34353A"
+# === Palette violette claire (style landing 10lex) ===
+BG_DARK = "#B47BFF"          # fond principal (violet/lavande de la landing)
+BG_SIDEBAR = "#9B61F0"       # sidebar — violet plus saturé
+BG_CARD = "#EFDDF9"          # cartes / zones de texte = cream pill
+BG_HOVER = "#E1C8F2"         # hover sur cream
+BORDER = "#0E0814"           # contour noir cartoon (épais)
 
-ACCENT = "#62E0C8"           # turquoise/menthe LocalSend
-ACCENT_HOVER = "#7BEAD3"
-ACCENT_TEXT = "#0A1F1A"      # texte sur fond accent (foncé pour contraste)
+ACCENT = "#402C90"           # violet sombre (= splash) — CTA / focus
+ACCENT_HOVER = "#5237B5"
+ACCENT_TEXT = "#FFFFFF"      # texte blanc sur accent sombre
 
-TEXT_PRIMARY = "#E6E7EA"
-TEXT_SECONDARY = "#9CA0A8"
-TEXT_MUTED = "#6B6F78"
+TEXT_PRIMARY = "#0E0814"     # noir cartoon sur cream
+TEXT_SECONDARY = "#3A1B6E"   # violet foncé pour secondary
+TEXT_MUTED = "#7A5FB5"       # violet doux pour muted
 
-DANGER = "#E06E6E"
-SUCCESS = "#62E0C8"
+# Pour le texte sur fond violet (sidebar / fond principal)
+TEXT_ON_DARK = "#FFFFFF"
+TEXT_ON_DARK_MUTED = "#EFDDF9"
 
-# Polices (Segoe UI sur Windows par défaut)
-FONT_FAMILY = "Segoe UI"
-FONT_SIZE_TITLE = 16
-FONT_SIZE_HEADING = 13
-FONT_SIZE_BODY = 11
+DANGER = "#FF4FA0"           # hot pink (rappel de la langue du dino)
+SUCCESS = "#402C90"
+
+# Polices
+# Coming Soon n'existe pas en système — on utilise Comic Sans MS qui est natif
+# sur Windows et donne un rendu cartoon manuscrit. Sniglet/Bagel Fat One ne sont
+# pas dispo non plus, on prend une bold display approchante.
+FONT_FAMILY = "Comic Sans MS"        # body cartoon manuscrit
+FONT_FAMILY_DISPLAY = "Bahnschrift"  # display lourd condensé natif Win
+FONT_SIZE_TITLE = 18
+FONT_SIZE_HEADING = 14
+FONT_SIZE_BODY = 12
 FONT_SIZE_SMALL = 10
 
-# Rayons / espacement
-RADIUS_LG = 12
-RADIUS_MD = 8
-RADIUS_SM = 6
-PAD_LG = 16
-PAD_MD = 10
-PAD_SM = 6
+# Rayons / espacement (généreux, look pill cartoon)
+RADIUS_LG = 22
+RADIUS_MD = 16
+RADIUS_SM = 10
+PAD_LG = 18
+PAD_MD = 12
+PAD_SM = 8
 
 
 def font(size: int = FONT_SIZE_BODY, weight: str = "normal") -> tuple:
     return (FONT_FAMILY, size, weight)
+
+
+def font_display(size: int = FONT_SIZE_TITLE, weight: str = "bold") -> tuple:
+    return (FONT_FAMILY_DISPLAY, size, weight)

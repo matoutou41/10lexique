@@ -1,5 +1,5 @@
 @echo off
-REM Lance Claude Correcteur en mode developpement (avec console pour voir les erreurs)
+REM Lance 10lex en mode developpement (avec console pour voir les erreurs)
 REM Necessite que install soit deja fait via build.bat
 
 cd /d "%~dp0"
